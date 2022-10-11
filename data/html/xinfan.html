@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <!-- <link rel="stylesheet" href="./xinfan.css" type="text/css"> -->
+    <link rel="stylesheet" type="text/css" href="{{css_path}}xinfan.css">
+</head>
+<body>
+    <div class="body" id="contanier">
+    <div class="title">
+        <i> <strong>Star 新番导视</strong>&nbsp;&nbsp;by </i>
+        <img src="{{css_path}}logo.png">
+    </div>
+    <div class="container">
+        {{each datas season}}
+            <div class="timeline">
+                {{if season.is_today}}
+                <div class="data"><p style="color: red;"><strong>{{season.date}}(today)</strong></p></div>
+                {{else}}
+                <div class="data"><p><strong>{{season.date}}</strong></p></div>
+                {{/if}}
+                {{each season.seasons seasons}}
+                <div class="fanju">
+                    <img src={{seasons.square_cover}}>
+                    <p>{{seasons.title}}({{seasons.pub_index}})</p>
+                </div>
+                {{/each}}
+            </div>
+            {{/each}}
+    </div>
+    </div>
+</body>
+</html>
