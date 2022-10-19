@@ -1,4 +1,8 @@
 #是否提示功能指令被禁止(0为不提示，1为提示，默认不提示)
 Setintercept: 0 
 
-#123
+#定时任务日志，0为false，1为true
+tasklog: true
+
+#定时任务时间
+tasktime: 0 0 18 * * ?

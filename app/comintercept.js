@@ -1,5 +1,4 @@
-import YAML from 'yaml'
-import fs from 'node:fs'
+
 import basie from '../model/basie.js'
 
 export class comintercept extends plugin {
@@ -29,6 +28,7 @@ export class comintercept extends plugin {
         ]
       }
     )
+    this.configs = basie.getYaml("config","config")
     this.data = basie.getYaml("intercept","data")
     Object.defineProperty(rule, 'log', {
       get: () => false
@@ -46,8 +46,7 @@ export class comintercept extends plugin {
             return false
           }
           if (this.data[i].word[j] === this.e.msg) {
-            let limit = basie.getYaml("config","config")
-            if(!limit.Setintercept){
+            if(!this.configs.Setintercept){
               return true
             }else{
               this.e.reply('该指令此已被禁止哦~')
