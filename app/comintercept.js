@@ -230,7 +230,7 @@ export class comintercept extends plugin {
         if (flag) {
           flag = 0
         } else {
-          msg.push('\n')
+          msg.push('\n*************************************\n')
         }
         msg.push(`群昵称【${group.group_name}】\n群号【${groupId}】\n群人数【${group.member_count}】`)
       })
