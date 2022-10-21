@@ -48,7 +48,7 @@ export class update extends plugin {
         let cm = 'git -C ./plugins/Star-plugin/ pull --no-rebase'
 
         if(isforce){
-            cm = `git -C ./plugins/Star-plugin/ pull checkout . &&${cm}`
+            cm = `git -C ./plugins/Star-plugin/ checkout . && ${cm}`
             this.reply('正在执行强制更新操作，请稍等')
         }else{
             this.reply('正在执行更新操作，请稍等')
@@ -128,7 +128,7 @@ export class update extends plugin {
         }
     
         if (stdout.includes('CONFLICT')) {
-          await this.reply([msg + '存在冲突\n', errMsg, stdout, '\n请解决冲突后再更新，或者执行#强制更新，放弃本地修改'])
+          await this.reply([msg + '存在冲突\n', errMsg, stdout, '\n请解决冲突后再更新，或者执行#星plugin强制更新，放弃本地修改'])
           return
         }
     
