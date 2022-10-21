@@ -53,6 +53,7 @@ export class update extends plugin {
         }else{
             this.reply('正在执行更新操作，请稍等')
         }
+        this.oldCommitId = await this.getcommitId('Star-plugin')
         up = true
         let ret =await this.execSync(cm)
         up = false
@@ -170,11 +171,10 @@ export class update extends plugin {
         if (log.length <= 0) return ''
     
         let end = ''
-        if (!plugin) {
+
           end = '更多详细信息，请前往github查看\nhttps://github.com/BeterKing/Star-plugin '
-        }
     
-        log = await this.makeForwardMsg(`${plugin || 'Yunzai-Bot'}更新日志，共${line}条`, log, end)
+        log = await this.makeForwardMsg(`${plugin}更新日志，共${line}条`, log, end)
     
         return log
       }
