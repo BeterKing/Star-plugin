@@ -42,8 +42,8 @@ export class comintercept extends plugin {
     for (let i in this.data) {
       if (this.data[i].groupid === this.e.group_id) {
         for (let j in this.data[i].word) {
-          if (!/#禁止/.test(this.e.msg) && !/#开放/.test(this.e.msg) && this.data[i].word.includes('XX') && this.e.msg.includes(this.data[i].word.replace(/XX/, ''))) {
-            return false
+          if (!/#禁止/.test(this.e.msg) && !/#开放/.test(this.e.msg) && this.data[i].word[j].includes('XX') && this.e.msg.includes(this.data[i].word[j].replace(/XX/, ''))) {
+            return true
           }
           if (this.data[i].word[j] === this.e.msg) {
             if(!this.configs.Setintercept){
@@ -65,8 +65,7 @@ export class comintercept extends plugin {
       this.e.reply('只有主人才能命令我哦~')
       return true
     }
-    let i 
-    let group_id=this.e.group_id
+    let mag=[]
     let list = this.e.msg.split(' ')
     var add=list[0].replace(/#禁止/, '')
     if (list[1] === undefined) {
@@ -74,66 +73,46 @@ export class comintercept extends plugin {
         this.e.reply('请在需要禁用的群聊中使用，或加上群号呢~')
         return true
       }
-      this.data.forEach(function (group){
-        if(group_id===group.groupid){
-          if(group.word.length===0){
-            group.word.push(add)
-            i=1
-            return
-          }
-          group.word.forEach(function(word){
-            if(word===add){
-              i=0
-              return
+      for (let i in this.data) {
+        if (this.data[i].groupid === this.e.group_id) {
+          mag = this.data[i].word
+          for (let j in mag) {
+            if (mag[j] === add) {
+              this.e.reply("已经禁止该指令了哦~")
+              return true
             }
-            i=1
-            group.word.push(add)
-            return
-          })
-          return
+          }
+          mag.push(add)
+          this.data[i].word = mag
+          basie.storage(this.data,"intercept","data")
+          this.e.reply(`${add}已成功禁止~`)
+          return true
         }
-        i=2
-      })
-      if(i===2){
-        this.data.push({groupid:group_id,word:[add]})
       }
-      if(i){
-        basie.storage(this.data,"intercept","data")
-        this.e.reply(`${add}已成功禁止~`)
-        return true
-      }
-      this.e.reply("已经禁止该指令了哦~")
+      this.data.push({groupid:this.e.group_id,word:[add]})
+      basie.storage(this.data,"intercept","data")
+      this.e.reply(`${add}已成功禁止~`)
       return true
     } else {
-      this.data.forEach(function (group){
-        if(Number(list[1])===group.groupid){
-          if(group.word.length===0){
-            group.word.push(add)
-            i=1
-            return
-          }
-          group.word.forEach(function(word){
-            if(word===add){
-              i=0
-              return
+      for (let i in this.data) {
+        if (this.data[i].groupid === Number(list[1])) {
+          mag = this.data[i].word
+          for(let j in mag){
+            if(mag[j] === add){
+              this.e.reply("这个词语已经禁止过了哦~")
+              return true
             }
-            i=1
-            group.word.push(add)
-            return
-          })
-          return
+          }
+          mag.push(add)
+          this.data[i].word = mag
+          basie.storage(this.data,"intercept","data")
+          this.e.reply(`${add}已成功禁止~`)
+          return true
         }
-        i=2
-      })
-      if(i===2){
-        this.data.push({groupid: Number(list[1]),word:[add]})
       }
-      if(i){
-        basie.storage(this.data,"intercept","data")
-        this.e.reply(`${add}已成功禁止~`)
-        return true
-      }
-      this.e.reply("已经禁止该指令了哦~")
+      this.data.push({groupid:Number(list[1]),word:[add]})
+      basie.storage(this.data,"intercept","data")
+      this.e.reply(`${add}已成功禁止~`)
       return true
     }
   }
@@ -230,18 +209,30 @@ export class comintercept extends plugin {
         if (flag) {
           flag = 0
         } else {
-          msg.push('\n*************************************\n')
+          msg.push('\n**************************************\n')
         }
         msg.push(`群昵称【${group.group_name}】\n群号【${groupId}】\n群人数【${group.member_count}】`)
       })
+      flag=1
       for (let i in this.data) {
         if (this.data[i].word.length === 0) {
           continue
         } else {
-          massege.push(`群号：【${this.data[i].groupid}】\n禁止指令：\n ${this.data[i].word}\n`)
+          if (flag) {
+            flag = 0
+          } else {
+            massege.push('\n**************************************\n')
+          }
+          let word
+          for(let j in this.data[i].word){
+            if(!word){
+              word=`${Number(j)+1}、`+this.data[i].word[j]
+            }
+            word=word+'\n'+`${Number(j)+1}、`+this.data[i].word[j]
+          }
+          massege.push(`群号：【${this.data[i].groupid}】\n禁止指令：\n${word}`)
         }
       }
-      massege.splice(0,1)
       if(massege.length===0){
         massege.push("暂无禁止指令的群呢~")
       }
