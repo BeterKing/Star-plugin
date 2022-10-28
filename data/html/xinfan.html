@@ -20,11 +20,17 @@
                 {{else}}
                 <div class="data"><p><strong>{{season.date}}</strong></p></div>
                 {{/if}}
+                <% let i = 0 %>
                 {{each season.seasons seasons}}
                 <div class="fanju">
                     <img src={{seasons.square_cover}}>
                     <p>{{seasons.title}}({{seasons.pub_index}})</p>
                 </div>
+                <% i = i + 1 %>
+                {{if(i===10)}}
+                <% i = 0 %>
+                <br>
+                {{/if}}
                 {{/each}}
             </div>
             {{/each}}
