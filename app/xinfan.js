@@ -35,13 +35,13 @@ export class xinfan extends plugin{
             }
         }
         let data = {
-            tplFile:`./plugins/Star-plugin/data/html/Star-plugin/xinfan/xinfan.html`,
+            tplFile:`./plugins/Star-plugin/data/html/xinfan.html`,
             css_path: `${this._path}/plugins/Star-plugin/data/html/`,
             saveId: 'xinfan',
             imgType: 'png',
             datas
         }
-        let img = await puppeteer.screenshot("xinfan", data)
+        let img = await puppeteer.screenshot("Star-plugin/xinfan", data)
         await this.reply(img)
     }
 }
