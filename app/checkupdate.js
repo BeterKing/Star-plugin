@@ -264,7 +264,7 @@ export class checkupdate extends plugin{
                 let forward=await this.makeForwardMsg(Bot.uin,title,msg)
     
                 this.checkupsha()
-                // Bot.pickUser(cfg.masterQQ[0]).sendMsg(forward)
+
                 this.reply(forward)
                 return true
             }
