@@ -18,7 +18,7 @@ export class update extends plugin {
             event:'message',
             priority: 4001,
             rule:[{
-                reg:'^#星plugin(更新|强制更新)$',
+                reg:'^#星星(更新|强制更新)$',
                 fnc: 'update'
             }
         ]
@@ -124,12 +124,12 @@ export class update extends plugin {
         }
     
         if (errMsg.includes('be overwritten by merge')) {
-          await this.reply(msg + `存在冲突：\n${errMsg}\n` + '请解决冲突后再更新，或者执行#强制更新，放弃本地修改')
+          await this.reply(msg + `存在冲突：\n${errMsg}\n` + '请解决冲突后再更新，或者执行#星星强制更新，放弃本地修改')
           return
         }
     
         if (stdout.includes('CONFLICT')) {
-          await this.reply([msg + '存在冲突\n', errMsg, stdout, '\n请解决冲突后再更新，或者执行#星plugin强制更新，放弃本地修改'])
+          await this.reply([msg + '存在冲突\n', errMsg, stdout, '\n请解决冲突后再更新，或者执行#星星强制更新，放弃本地修改'])
           return
         }
     
