@@ -35,7 +35,7 @@ export class xinfan extends plugin{
             }
         }
         let data = {
-            tplFile:`./plugins/Star-plugin/data/html/xinfan.html`,
+            tplFile:`./plugins/Star-plugin/data/html/Star-plugin/xinfan/xinfan.html`,
             css_path: `${this._path}/plugins/Star-plugin/data/html/`,
             saveId: 'xinfan',
             imgType: 'png',
